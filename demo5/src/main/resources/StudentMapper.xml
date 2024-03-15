@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.sxgkd.entity.IStudentMapper">
+    <insert id="addStudent" parameterType="student">
+        insert into student(stuNo, stuName, stuAge, graName)
+        values (#{stuNo}, #{stuName}, #{stuAge}, #{graName})
+    </insert>
+    <delete id="deleteStudentByNo" parameterType="int">
+        delete from student where stuNo=#{stuNo}
+    </delete>
+    <update id="updateStudentByNo" parameterType="student">
+        update student
+        set stuName=#{stuName},
+            stuAge=#{stuAge},
+            graName=#{graName}
+        where stuNo=#{stuNo}
+    </update>
+    <select id="queryStudentByNo" parameterType="int"
+            resultType="student">
+        select *
+        from student
+        where stuNo = #{stuNo}
+    </select>
+    <select id="getAllStudents" resultType="student">
+        select *
+        from student
+    </select>
+    <select id="testQueryStudentByNoWithOGNL" parameterType="student" resultType="student">
+        select stuNo,stuName,stuAge,graName from student
+        <where>
+            <if test="graName != null and graName !='' ">
+                and graName like '%${graName}%'
+            </if>
+            <if test="stuAge != null and stuAge > 0">
+                and stuAge = #{stuAge}
+            </if>
+        </where>
+    </select>
+</mapper>

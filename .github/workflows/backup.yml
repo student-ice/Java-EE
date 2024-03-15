@@ -1,0 +1,19 @@
+on:
+  push:
+  pull_request_target:
+    branches: [master]
+name: Backup
+jobs:
+  run:
+    name: Run
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Black list
+        uses: Yikun/hub-mirror-action@master
+        with:
+          src: github/student-ice
+          dst: gitee/student-ice
+          dst_key: ${{ secrets.GITEE_PRIVATE_KEY }}
+          dst_token: ${{ secrets.GITEE_TOKEN }}
+          white_list: 'Java-EE'
