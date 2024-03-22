@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.sxgkd.entity.IStudentMapper">
+    <sql id="queryWithGranameAndAge">
+        <if test="graName != null and graName !='' ">
+            and graName like '%${graName}%'
+        </if>
+        <if test="stuAge != null and stuAge > 0">
+            and stuAge = #{stuAge}
+        </if>
+    </sql>
+    <insert id="addStudent" parameterType="student">
+        insert into student(stuNo, stuName, stuAge, graName)
+        values (#{stuNo}, #{stuName}, #{stuAge}, #{graName})
+    </insert>
+    <delete id="deleteStudentByNo" parameterType="int">
+        delete from student where stuNo=#{stuNo}
+    </delete>
+    <update id="updateStudentByNo" parameterType="student">
+        update student
+        set stuName=#{stuName},
+            stuAge=#{stuAge},
+            graName=#{graName}
+        where stuNo=#{stuNo}
+    </update>
+    <select id="queryStudentByNo" parameterType="int"
+            resultType="student">
+        select *
+        from student
+        where stuNo = #{stuNo}
+    </select>
+    <select id="getAllStudents" resultType="student">
+        select *
+        from student
+    </select>
+    <select id="testQueryStudentByNoWithOGNL" parameterType="student" resultType="student">
+        select stuNo,stuName,stuAge,graName from student
+        <where>
+            <include refid="queryWithGranameAndAge"></include>
+        </where>
+    </select>
+    <select id="queryStudentWithForeach" parameterType="grade" resultType="student">
+        select * from student
+        <where>
+            <if test="stuNos != null and stuNos.size > 0">
+                <foreach collection="stuNos" open="stuNo in(" close=")" item="stuNo" separator=",">
+                    #{stuNo}
+                </foreach>
+            </if>
+        </where>
+    </select>
+    <select id="queryStudentWithForeachAndList" parameterType="java.util.List" resultType="student">
+        select * from student
+        <where>
+            <if test="list != null and list.size>0">
+                <foreach collection="list" open="stuNo in(" close=")" item="stuNo" separator=",">
+                    #{stuNo}
+                </foreach>
+            </if>
+        </where>
+    </select>
+    <select id="queryStudentWithForeachAndArray" parameterType="int[]" resultType="student">
+        select * from student
+        <where>
+            <if test="array != null and array.length > 0 ">
+                <foreach collection="array" open=" stuNo in(" close=")" item="stuNo" separator=",">
+                    #{stuNo}
+                </foreach>
+            </if>
+        </where>
+    </select>
+
+    <select id="queryStudentWithForeachAndObjectArray" parameterType="Object[]" resultType="student">
+        select * from student
+        <where>
+            <if test="array != null and array.length > 0">
+                <foreach collection="array" open=" stuNo in(" close=")" item="student" separator=",">
+                    #{student.stuNo}
+                </foreach>
+            </if>
+        </where>
+    </select>
+
+    <select id="queryStudentAndCardBusinessByStuNo" parameterType="int" resultType="StudentAndCardBusiness">
+        select s.*,c.* from student s inner join studentcard c on s.cardId = c.cardId where s.stuNo = #{stuNo}
+    </select>
+    <select id="queryStudentAndCardByStuNoWithResultMap" parameterType="int" resultMap="student_card_map">
+        select s.*,c.* from student s inner join studentcard c on s.cardId = c.cardId where s.stuNo = #{stuNo}
+    </select>
+
+    <resultMap id="student_card_map" type="student">
+        <id property="stuNo" column="stuNo" />
+        <result property="stuName" column="sutName" />
+        <result property="stuAge" column="stuAge" />
+        <result property="graName" column="graName" />
+        <association property="card" javaType="studentCard">
+            <id property="cardId" column="cardId" />
+            <result property="cardInfo" column="cardInfo" />
+        </association>
+    </resultMap>
+    <select id="queryClassAndStudentByClassId" parameterType="int" resultMap="classAndStudentMap">
+        select s.*,sc.* from student s inner join studentclass sc on s.classId = sc.classId where s.classId = #{classId}
+    </select>
+
+    <resultMap id="classAndStudentMap" type="studentClass">
+        <id property="classId" column="classId" />
+        <result property="className" column="className" />
+        <collection property="students" ofType="student">
+            <id property="stuNo" column="stuNo" />
+            <result property="stuName" column="stuName" />
+            <result property="stuAge" column="stuAge" />
+            <result property="graName" column="graName" />
+        </collection>
+    </resultMap>
+
+</mapper>
