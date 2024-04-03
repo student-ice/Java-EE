@@ -8,4 +8,6 @@ public interface IStudentService {
     boolean deleteStudentByPrimaryKey(int stuNo);
     //删除学生
     boolean deleteStudentByNo(int stuNO);
+
+    Student selectByPrimaryKey(int stuNo);
 }

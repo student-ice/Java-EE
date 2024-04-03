@@ -6,8 +6,8 @@ import org.springframework.stereotype.Repository;
 
 @Mapper
 @Repository
-public interface StudentMapper {
+public interface IStudentMapper {
     Student selectByPrimaryKey(int stuNo);
-    int insert(Student student);
+    int addStudent(Student student);
     int deleteByPrimaryKey(int stuNo);
 }
