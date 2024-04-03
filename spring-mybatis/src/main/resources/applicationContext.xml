@@ -39,13 +39,12 @@
     </bean>
 
 
-    <mybatis-spring:scan base-package="cn.edu.sxgkd.ooptest.dao"/>
+    <mybatis-spring:scan base-package="cn.edu.sxgkd.dao"/>
 
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <constructor-arg ref="datasource"/>
     </bean>
-    <context:component-scan base-package="cn.edu.sxgkd.service,cn.edu.sxgkd.ooptest.dao"/>
-
+    <context:component-scan base-package="cn.edu.sxgkd.service,cn.edu.sxgkd.dao"/>
 
     <aop:config>
         <aop:pointcut id="txPointCut" expression="execution(* cn.edu.sxgkd.service..*.*(..))"/>
@@ -64,6 +63,6 @@
         </tx:attributes>
     </tx:advice>
 
-    <tx:annotation-driven transaction-manager="transactionManager" />
+    <tx:annotation-driven transaction-manager="transactionManager"/>
 
 </beans>

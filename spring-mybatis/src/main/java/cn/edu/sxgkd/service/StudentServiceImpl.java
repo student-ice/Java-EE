@@ -1,7 +1,7 @@
 package cn.edu.sxgkd.service;
 
 import cn.edu.sxgkd.entity.Student;
-import cn.edu.sxgkd.ooptest.dao.StudentMapper;
+import cn.edu.sxgkd.dao.StudentMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;

@@ -1,4 +1,4 @@
-package cn.edu.sxgkd.ooptest.dao;
+package cn.edu.sxgkd.dao;
 
 import cn.edu.sxgkd.entity.Student;
 import org.apache.ibatis.annotations.Mapper;
