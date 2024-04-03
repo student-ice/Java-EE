@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <bean id="teacher" class="cn.edu.sxgkd.diinstance.Teacher">
+        <property name="name" value="颜群"></property>
+        <property name="age" value="28"></property>
+    </bean>
+    <bean id="course-set" class="cn.edu.sxgkd.diinstance.Course">
+        <property name="name" value="Java"></property>
+        <property name="hours" value="100"></property>
+        <property name="teacher" ref="teacher"></property>
+     </bean>
+    <bean id="course-constructor-value" class="cn.edu.sxgkd.diinstance.Course">
+        <constructor-arg value="Java" ></constructor-arg>
+        <constructor-arg value="100" ></constructor-arg>
+        <constructor-arg ref="teacher" ></constructor-arg>
+    </bean>
+    <bean id="course-constructor-index" class="cn.edu.sxgkd.diinstance.Course">
+        <constructor-arg index="0" value="Java" ></constructor-arg>
+        <constructor-arg index="1" value="100" ></constructor-arg>
+        <constructor-arg index="2" ref="teacher" ></constructor-arg>
+    </bean>
+    <bean id="course-constructor-name" class="cn.edu.sxgkd.diinstance.Course">
+        <constructor-arg name="name" value="Java" ></constructor-arg>
+        <constructor-arg name="hours" value="100" ></constructor-arg>
+        <constructor-arg name="teacher" ref="teacher" ></constructor-arg>
+    </bean>
+</beans>
